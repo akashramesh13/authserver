@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  users_database:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=users
+    ports:
+      - 3306:3306
+  auth_server:
+    depends_on:
+      - users_database
+    ports:
+      - 8090:8090
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://users_database:3306/users?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
