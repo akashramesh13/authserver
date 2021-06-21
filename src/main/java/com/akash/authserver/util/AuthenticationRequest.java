@@ -1,4 +1,5 @@
 package com.akash.authserver.util;
+
 import java.io.Serializable;
 
 public class AuthenticationRequest implements Serializable {
@@ -24,8 +25,7 @@ public class AuthenticationRequest implements Serializable {
     }
 
     //need default constructor for JSON Parsing
-    public AuthenticationRequest()
-    {
+    public AuthenticationRequest() {
 
     }
 

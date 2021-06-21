@@ -6,18 +6,20 @@ import com.akash.authserver.service.UserServiceImpl;
 import com.akash.authserver.util.AuthenticationRequest;
 import com.akash.authserver.util.AuthenticationResponse;
 import com.akash.authserver.util.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.authentication.AuthenticationManager;
 
 import java.security.Principal;
 
 @RestController
+@Slf4j
 public class UserController {
 
     @Autowired
@@ -69,6 +71,12 @@ public class UserController {
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
+    }
+
+    @PostMapping("/findrole")
+    public String findUserRoleByToken(@RequestBody String token) {
+        log.info("finding user role from token");
+        return jwtTokenUtil.getUserRole(token);
     }
 
 

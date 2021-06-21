@@ -4,7 +4,7 @@ spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://users_database:3306/users?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/users?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
   jpa:
     show-sql: true
     hibernate:
@@ -13,7 +13,8 @@ spring:
   application:
     name: auth_server
 logging:
+  file:
+    path: .
+    name: auth_server.log
   level:
-    root: WARN
-  path:
-    file: auth_server.log
+    ROOT: DEBUG

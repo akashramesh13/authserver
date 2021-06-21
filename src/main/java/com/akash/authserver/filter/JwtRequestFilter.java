@@ -2,6 +2,7 @@ package com.akash.authserver.filter;
 
 import com.akash.authserver.service.UserServiceImpl;
 import com.akash.authserver.util.JwtUtil;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Log
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -25,9 +27,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
 
+    public JwtRequestFilter() {
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
+        log.info("Entered doFilterInternal()");
         final String authorizationHeader = request.getHeader("Authorization");
 
         String username = null;
@@ -40,7 +46,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
             if (jwtUtil.validateToken(jwt, userDetails)) {
