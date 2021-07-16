@@ -13,8 +13,7 @@ spring:
   application:
     name: auth_server
 logging:
-  file:
-    path: .
-    name: auth_server.log
   level:
-    ROOT: DEBUG
+    root: INFO
+  path:
+    file: auth_server.log
